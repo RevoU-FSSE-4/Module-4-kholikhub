@@ -3,7 +3,6 @@ import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import "./Home.css";
 import { useState } from "react";
 import { Input, Typography } from "antd";
-import Password from "antd/es/input/Password";
 
 
 const { Text } = Typography;
@@ -120,182 +119,223 @@ function Home() {
 
   return (
     <>
-      <h1>REGISTER ACCOUNT</h1>
-      <div>
+      <h1 className="text-center font-bold text-3xl m-8 text-red-500">REGISTER ACCOUNT</h1>
+      <div className="mt-5 flex justify-center ">
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {(props) => (
-            <Form>
+            <div className="">
+              <Form className="">
               {page === 1 && (
                 <div>
-                  <h2>PERSONAL INFORMATION</h2>
-                  <div>
-                    <p>{fulfillOne}</p>
-                    <label htmlFor="fullname">Full Name</label>
-                    <Input
-                     value={props.values.fullName}
-                     name={"fulltName"}
-                     onChange={props.handleChange("fullName")}
-                     status={props.errors.fullName && "error"}
-                    />
-                    <br />
-                   {props.errors.fullName && (
-                      <Text type="danger">{props.errors.fullName}</Text>
-                   )}
-                  
-                    <label htmlFor="email">Email</label>
-                      <Field
-                        id="email"
-                        name="email"
-                        placeholder="zaza@gmail.com"
-                        type="email"
+                  <h2 className="font-bold m-4 ">PERSONAL INFORMATION</h2>
+                  <div className="">
+                  <p>{fulfillOne}</p>
+                    <div>
+                    <label className="" htmlFor="fullname">Full Name</label>
+                    <div className="">
+                      <Input
+                      value={props.values.fullName}
+                      className="bg-slate-100"
+                      name={"fullName"}
+                      onChange={props.handleChange("fullName")}
+                      status={props.errors.fullName && "error"}
                       />
-                      <br />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="feedback"
-                      />
+                      {props.errors.fullName && (
+                        <Text type="danger">{props.errors.fullName}</Text>
+                      )}
+                    </div>
                     
-                    <label htmlFor="dob">Date of Birth (dd-mm-yyyy):</label>
-                      <Field type="text" id="dob" name="dob" />
-                      <ErrorMessage name="dob" component="div" className="feedback" />
+                    </div>
+                    <div className="mt-5">
+                    <label className="" htmlFor="email">Email</label>
+                    <div>
+                      <Field
+                          id="email"
+                          name="email"
+                          placeholder="  zaza@gmail.com"
+                          type="email"
+                          className="border-2 mt-5 bg-slate-100 pr-20 pt-1 rounded "
+                        />
+                        <ErrorMessage
+                          name="email"
+                          component="div"
+                          className="feedback"
+                        />
+                    </div>
+                    </div>
+                    <div className="mt-5">
+                      <label className="mt-5" htmlFor="dob">Date of Birth (dd-mm-yyyy):</label>
+                      <div>
+                        <Field 
+                            type="text" 
+                            id="dob" 
+                            name="dob" 
+                            className="border-2 mt-5 mb-8 bg-slate-100 pr-20 pt-1 rounded "
+                            />
+                          <ErrorMessage 
+                            name="dob" 
+                            component="div" 
+                            className="feedback" 
+                            />
+                      </div>
+                        
+                    </div>
 
-                   <br />
+                    <div>
                     <button
                       type="button"
+                      className="border-2 p-2 pr-9"
                       onClick={() => {
                         handlePage1(props);
                       }}
                    >
                      Next
                     </button>
+                    </div>
                   </div>
                 </div>
               )}
 
               {page === 2 && (
                 <div>
-                  <h2>ADDRESS INFORMATION</h2>
+                  <h2 className="font-bold m-4 ">ADDRESS INFORMATION</h2>
                   <div>
-                  <label htmlFor="streetAddress">Street Address</label>
-                    <Input
-                     value={props.values.streetAddress}
-                     name={"streetAddress"}
-                     onChange={props.handleChange("streetAddress")}
-                     status={props.errors.streetAddress && "error"}
-                    />
-                    <br />
-                   {props.errors.streetAddress && (
-                      <Text type="danger">{props.errors.streetAddress}</Text>
-                   )}
-
-                  <label htmlFor="city">City</label>
-                    <Input
-                     value={props.values.city}
-                     name={"city"}
-                     onChange={props.handleChange("city")}
-                     status={props.errors.city && "error"}
-                    />
-                    <br />
-                   {props.errors.city && (
-                      <Text type="danger">{props.errors.city}</Text>
-                   )}
-
-                  <label htmlFor="state">State</label>
-                    <Input
-                     value={props.values.state}
-                     name={"state"}
-                     onChange={props.handleChange("state")}
-                     status={props.errors.state && "error"}
-                    />
-                    <br />
-                   {props.errors.state && (
-                      <Text type="danger">{props.errors.state}</Text>
-                   )}
-
-                  <label htmlFor="zipCode">Zip Code</label>
-                    <Field
-                      id="zipCode"
-                      name="zipCode"
-                      placeholder="67282"
-                      type="zipCode"
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="zipCode"
-                      component="div"
-                      className="feedback"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPage(page - 1);
-                      }}
-                    >
+                    <label htmlFor="streetAddress">Street Address</label>
+                      <Input
+                      value={props.values.streetAddress}
+                      className="border-2 mt-5 bg-slate-100 pr-20 pt-1 rounded mb-5"
+                      name={"streetAddress"}
+                      onChange={props.handleChange("streetAddress")}
+                      status={props.errors.streetAddress && "error"}
+                      />
+                    {props.errors.streetAddress && (
+                        <Text type="danger">{props.errors.streetAddress}</Text>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="city">City</label>
+                      <Input
+                      value={props.values.city}
+                      className="border-2 mt-5 bg-slate-100 pr-20 pt-1 rounded mb-5"
+                      name={"city"}
+                      onChange={props.handleChange("city")}
+                      status={props.errors.city && "error"}
+                      />
+                      <br />
+                    {props.errors.city && (
+                        <Text type="danger">{props.errors.city}</Text>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="state">State</label>
+                      <Input
+                      value={props.values.state}
+                      className="border-2 mt-5 bg-slate-100 pr-20 pt-1 rounded mb-5"
+                      name={"state"}
+                      onChange={props.handleChange("state")}
+                      status={props.errors.state && "error"}
+                      />
+                      <br />
+                    {props.errors.state && (
+                        <Text type="danger">{props.errors.state}</Text>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="zipCode">Zip Code</label>
+                  </div>
+                      <Field
+                      className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded "
+                        id="zipCode"
+                        name="zipCode"
+                        placeholder="67282"
+                        type="zipCode"
+                      />
+                      <ErrorMessage
+                        name="zipCode"
+                        component="div"
+                        className="feedback"
+                      />
+                  <div>
+                      <button
+                      className="border-2 mt-5 p-2 m-2"
+                        type="button"
+                        onClick={() => {
+                          setPage(page - 1);
+                        }}
+                      >
                       Previous
-                    </button>
-                    <br />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handlePage2(props);
-                      }}
-                   >
-                     Next
-                    </button>
+                      </button>
+                      <button
+                        className="border-2 m-2 p-2 pr-9"
+                        type="button"
+                        onClick={() => {
+                          handlePage2(props);
+                        }}
+                      >   
+                      Next
+                      </button>
                   </div>
                 </div>
               )}
 
               {page === 3 && (
                 <div>
-                  <h2>ACCOUNT INFORMATION</h2>
+                  <h2 className="font-bold m-4 ">ACCOUNT INFORMATION</h2>
                   <div>
-
-                  <label htmlFor="userName">User Name</label>
+                    <label htmlFor="userName">User Name</label>
+                  </div>
+                  <div>
                     <Input
-                     value={props.values.userName}
-                     name={"userName"}
-                     onChange={props.handleChange("userName")}
-                     status={props.errors.userName && "error"}
-                    />
-                    <br />
-                   {props.errors.userName && (
-                      <Text type="danger">{props.errors.userName}</Text>
-                   )}
-
+                      value={props.values.userName}
+                      className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded "
+                      name={"userName"}
+                      onChange={props.handleChange("userName")}
+                      status={props.errors.userName && "error"}
+                      />
+                      <br />
+                      {props.errors.userName && (
+                          <Text type="danger">{props.errors.userName}</Text>
+                      )}
+                  </div>   
+                  <div className=" mb-5 mt-5  pr-20 pt-1 rounded ">
                     <label htmlFor="password">Password</label>
+                  </div>
+                  <div className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded ">
                     <Field
-                      id="password"
-                      name="password"
-                      placeholder=" KKkkk.123 "
-                      type="password"
-                    />
-                    <br />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="feedback"
-                    />
-                    <button
+                        id="password"
+                        name="password"
+                        placeholder=" KKkkk.123 "
+                        type="password"
+                      />
+                      <ErrorMessage
+                        name="password"
+                        component="div"
+                        className="feedback"
+                      />
+                  </div>
+                  <button
                       type="button"
+                      className="border-2 mt-5 p-2 m-2"
                       onClick={() => {
                         setPage(page - 1);
                       }}
                     >
                       Previous
-                    </button>
-                    <br />
-                    <button type="submit">Save</button>
-                  </div>
+                  </button>
+                  <button 
+                      className="border-2 m-2 p-2 pr-9"
+                      type="submit">
+                        Save
+                  </button>
                 </div>
               )}
             </Form>
+            </div>
+            
           )}
         </Formik>
       </div>
