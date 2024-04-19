@@ -44,10 +44,8 @@ const validationSchema = Yup.object().shape({
     .max(15, "Must be 15 characters or less")
     .required("Required"),
   password: Yup.string()
-    .matches(
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/,
-      "invalid Password. Required thow uppercase, special case, who digits, three lowercase, length 8"
-    ),
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters'),
 });
 
 const initialValues = {
@@ -64,20 +62,16 @@ const initialValues = {
   password:"",
 };
 
-interface PersonalInformation {
+interface FormData {
   fullName: string;
   email: string;
   dob: string;
-}
 
-interface AddressInformation {
   streetAddress: string;
   city: string;
   state: string;
   zipCode: string;
-}
 
-interface AccountInformation {
   userName: string;
   password: string;
 }
@@ -86,11 +80,11 @@ function Home() {
   const [page, setPage] = useState<number>(1);
   const [fulfillOne, setFulfillOne] = useState("");
 
-  const handleSubmit = (values: PersonalInformation) => {
+  const handleSubmit = (values: FormData) => {
     alert(JSON.stringify(values, null, 10));
   };
 
-  const handlePage1 = (props: FormikProps<PersonalInformation>) => {
+  const handlePage1 = (props: FormikProps<FormData>) => {
     if (
       props.values.fullName &&
       props.values.email &&
@@ -100,13 +94,13 @@ function Home() {
       !props.errors.dob
     ) {
       setFulfillOne("");
-      setPage(1);
+      setPage(2);
     } else {
       setFulfillOne("Form One is not valid");
     }
   };
 
-  const handlePage2 = (props: FormikProps<AddressInformation>) => {
+  const handlePage2 = (props: FormikProps<FormData>) => {
     if (
       props.values.streetAddress &&
       props.values.city &&
@@ -118,23 +112,9 @@ function Home() {
       !props.errors.zipCode
     ) {
       setFulfillOne("");
-      setPage(2);
-    } else {
-      setFulfillOne("Form One is not valid");
-    }
-  };
-
-  const handlePage3 = (props: FormikProps<AccountInformation>) => {
-    if (
-      props.values.userName &&
-      props.values.password &&
-      !props.errors.userName &&
-      !props.errors.password
-    ) {
-      setFulfillOne("");
       setPage(3);
     } else {
-      setFulfillOne("Form One is not valid");
+      setFulfillOne("Form Two is not valid");
     }
   };
 
@@ -259,11 +239,11 @@ function Home() {
                     >
                       Previous
                     </button>
+                    <br />
                     <button
                       type="button"
                       onClick={() => {
                         handlePage2(props);
-                        setPage(page - 3)
                       }}
                    >
                      Next
@@ -293,7 +273,7 @@ function Home() {
                     <Field
                       id="password"
                       name="password"
-                      placeholder=" password "
+                      placeholder=" KKkkk.123 "
                       type="password"
                     />
                     <br />
@@ -305,12 +285,12 @@ function Home() {
                     <button
                       type="button"
                       onClick={() => {
-                        handlePage3(props)
-                        setPage(page - 2);
+                        setPage(page - 1);
                       }}
                     >
                       Previous
                     </button>
+                    <br />
                     <button type="submit">Save</button>
                   </div>
                 </div>
