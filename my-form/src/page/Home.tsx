@@ -3,47 +3,46 @@ import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import "./Home.css";
 import { useState } from "react";
 import { Input, Typography } from "antd";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+
 
 const { Text } = Typography;
 // import { useState } from "react";
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string()
+  fullName: Yup.string()
     .min(5, "Too short!")
     .max(15, "Must be 15 characters or less")
     .required("Required"),
-  lastName: Yup.string()
-    .max(20, "Must be 20 characters or less")
-    .required("Required"),
   email: Yup.string().email("Invalid email address").required("Required"),
+  // dob: Yup.date().dob("invalid date of birth").required("Required")
 });
 
 const initialValues = {
-  firstName: "",
-  lastName: "",
+  fullName: "",
   email: "",
+  // dob: "",
 };
 
-interface FormData {
-  firstName: string;
-  lastName: string;
+interface PersonalInformation {
+  fullName: string;
   email: string;
+  // dob: Date;
 }
 
 function Home() {
   const [page, setPage] = useState<number>(1);
   const [fulfillOne, setFulfillOne] = useState("");
 
-  const handleSubmit = (values: FormData) => {
+  const handleSubmit = (values: PersonalInformation) => {
     alert(JSON.stringify(values, null, 10));
   };
 
-  const handlePage1 = (props: FormikProps<FormData>) => {
+  const handlePage1 = (props: FormikProps<PersonalInformation>) => {
     if (
-      props.values.firstName &&
-      props.values.lastName &&
-      !props.errors.firstName &&
-      !props.errors.lastName
+      props.values.fullName &&
+      !props.errors.fullName
     ) {
       setFulfillOne("");
       setPage(2);
@@ -54,7 +53,7 @@ function Home() {
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <h1>REGISTER ACCOUNT</h1>
       <div>
         <Formik
           initialValues={initialValues}
@@ -66,28 +65,17 @@ function Home() {
               {page === 1 && (
                 <div>
                   <p>{fulfillOne}</p>
-                  <label htmlFor="firstName">First Name</label>
+                  <label htmlFor="fullname">Full Name</label>
                   <Input
-                    value={props.values.firstName}
-                    name={"firstName"}
-                    onChange={props.handleChange("firstName")}
-                    status={props.errors.firstName && "error"}
+                    value={props.values.fullName}
+                    name={"fulltName"}
+                    onChange={props.handleChange("fullName")}
+                    status={props.errors.fullName && "error"}
                   />
-                  {/* <Field id="firstName" name="firstName" placeholder="Jane" /> */}
                   <br />
-                  {props.errors.firstName && (
-                    <Text type="danger">{props.errors.firstName}</Text>
+                  {props.errors.fullName && (
+                    <Text type="danger">{props.errors.fullName}</Text>
                   )}
-                  <br />
-
-                  <label htmlFor="lastName">Last Name</label>
-                  <Field id="lastName" name="lastName" placeholder="Doe" />
-                  <br />
-                  <ErrorMessage
-                    name="lastName"
-                    component="div"
-                    className="feedback"
-                  />
                   <br />
                   <button
                     type="button"
