@@ -48,7 +48,7 @@ const EditTodo = () => {
     );
     if (response) {
       alert("success edit todo!");
-      navigate("/menu");
+      navigate("/Dashboard");
     }
   };
 

@@ -40,7 +40,7 @@ const Menu = () => {
       <h1>Menu Page </h1>
       <button
         onClick={() => {
-          navigate("/new_todo");
+          navigate("/EditTodo");
         }}
       >
         Add Todo

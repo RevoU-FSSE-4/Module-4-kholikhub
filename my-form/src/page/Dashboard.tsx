@@ -1,30 +1,66 @@
-import "./Home.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import FetchData from "../Utils/Fetch";
+import { useNavigate } from "react-router-dom";
 import { ProfileContext } from "../Context/ProfileContext";
 
-function Dashboard() {
-    const { name} = useContext(ProfileContext);
+interface Todo {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+}
+
+interface Page {
+  todos: Todo[];
+}
+
+const Dashboard = () => {
+  const profile = useContext(ProfileContext);
+  const [data, setData] = useState<Todo[]>();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response: Page = await FetchData("https://library-crud-sample.vercel.app/api/category/create");
+      setData(response.todos);
+      // alert(JSON.stringify(data, null, 10));
+    };
+
+    fetchData();
+  }, []);
+
+  const gotoEdit = (id: number) => {
+    navigate("/edit/" + id);
+  };
+
   return (
-    <div>
-      <div className="m-4 flex justify-center text-2xl font-semibold">
-       <h1>Category</h1>
-      </div>
-      <h1 className="flex justify-center font-bold">Profile: {name}</h1>
-        <ul>
-          <li>
-            <h2>List of Category</h2>
-          </li>
-          <li>
-            <h2>Save Category</h2>
-          </li>
-          <li>
-            <h2>Update Category</h2>
-          </li>
-          <li>
-            <h2>Delete Category</h2>
-          </li>
-        </ul>
-    </div>
+    <>
+      <h1>Profile: {profile.name}</h1>
+      <h1>Menu Page </h1>
+      <button
+        onClick={() => {
+          navigate("/AddTodo");
+        }}
+      >
+        Add Todo
+      </button>
+      <ul>
+        {data &&
+          data.map((item) => (
+            <li key={item.id}>
+              {item.todo} - {item.completed ? "Completed" : "Not Completed"}{" "}
+              <button
+                onClick={() => {
+                  gotoEdit(item.id);
+                }}
+              >
+                Edit
+              </button>
+            </li>
+          ))}
+      </ul>
+    </>
   );
 };
 

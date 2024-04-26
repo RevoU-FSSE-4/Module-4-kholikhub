@@ -8,10 +8,6 @@ import { ProfileContext } from "../Context/ProfileContext";
 const { Text } = Typography;
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(5, "Too short!")
-    .max(15, "Must be 15 characters or less")
-    .required("Required"),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters"),
@@ -19,21 +15,19 @@ const validationSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  name: "",
   password: "",
   email: "",
 };
 
 interface FormData {
-  name: string;
   password: string;
   email: string;
 }
 
-export default function Register() {
-    const [name, setName,]= useState<string>("");
-    const [password, setPassword] = useState<string>("");
+export default function FormLogin() {
     const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
 
     const navigate = useNavigate()
   
@@ -47,14 +41,14 @@ export default function Register() {
     async function onSubmit(e:any) {
         e.preventDefault()
         // console.log(e.target.email.value)
-        setName(e.name);
-        setPassword(e.password);
         setEmail(e.email);
+        setPassword(e.password);
+
         // POST
         const body: FormData = {
-            "name": e.target.name.value,
-            "password": e.target.password.value,
-            "email": e.target.email.value,
+          "email": e.target.email.value,
+          "password": e.target.password.value,
+
         };
 
         const options = {
@@ -66,10 +60,10 @@ export default function Register() {
         };
 
         try {
-            const response = await fetch('https://library-crud-sample.vercel.app/api/user/register', options);
+            const response = await fetch('https://library-crud-sample.vercel.app/api/user/login', options);
             // handle kalo error harus ngapain
             if (!response.ok) {
-              throw new Error('Network response was not ok');
+              throw new Error('invalid email or password');
             }
         
             const data = await response.json();
@@ -77,8 +71,9 @@ export default function Register() {
         
             // next move
             setTimeout(() => {
-                alert("Register Success");
-                navigate("/Formlogin");
+                alert("Login Success");
+                localStorage.setItem('token', JSON.stringify(data));
+                navigate("/Dashboard");
             }, 1000);
         
         } catch (error) {
@@ -97,43 +92,7 @@ export default function Register() {
           <div className="border-2 p-6">
             <Form onSubmit={onSubmit} >
                 <div>
-                  <h2 className="font-bold m-4 ">REGISTER ACCOUNT</h2>
-                  <div>
-                    <label htmlFor="name">User Name</label>
-                  </div>
-                  <div>
-                    <Input
-                      value={props.values.name}
-                      className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded "
-                      name={"name"}
-                      onChange={props.handleChange("name")}
-                      status={props.errors.name && "error"}
-                    />
-                    <br />
-                    {props.errors.name && (
-                      <Text 
-                      type="danger">
-                      {props.errors.name}
-                      </Text>
-                    )}
-                  </div>
-                  <div className=" mt-4">
-                    <label htmlFor="password">Password</label>
-                  </div>
-                  <div>
-                    <Field
-                      className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded "
-                      id="password"
-                      name="password"
-                      placeholder=" ******* "
-                      type="password"
-                    />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="feedback"
-                    />
-                  </div>
+                  <h2 className="font-bold m-4 ">LOGIN ACCOUNT</h2>
 
                   <div className="mt-5">
                     <label className="" htmlFor="email">
@@ -155,6 +114,23 @@ export default function Register() {
                       />
                     </div>
                   </div>
+                  <div className=" mt-4">
+                    <label htmlFor="password">Password</label>
+                  </div>
+                  <div>
+                    <Field
+                      className="border-2 mb-5 mt-5 bg-slate-100 pr-20 pt-1 rounded "
+                      id="password"
+                      name="password"
+                      placeholder=" ******* "
+                      type="password"
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className="feedback"
+                    />
+                  </div>
                   <div className="pt-7">
                     <button
                       type="submit"
@@ -162,7 +138,7 @@ export default function Register() {
                       onClick={() => {
                       }}
                     >
-                      REGISTER
+                      LOGIN
                     </button>
                   </div>
                 </div>

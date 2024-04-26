@@ -11,8 +11,11 @@ import EditTodo from "./page/EditTodo";
 import NavigationComponent from "./Components/NavigationComponent";
 import Copyright from "./Components/Copyright";
 import Register from "./page/Register";
+import FormLogin from "./page/FormLogin";
 import Login from "./page/Login";
 import Dashboard from "./page/Dashboard";
+// import HeaderComponent from "./page/Logout";
+
 
 function App() {
   const [profile, setProfile] = useState("anonymous");
@@ -35,13 +38,15 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          {/* <Route path="/HeaderComponent" element={<HeaderComponent />}></Route> */}
           <Route path="/Register" element={<Register />}></Route>
-          <Route path="/menu" element={<Menu />}></Route>
           <Route path="/Login" element={<Login/>}></Route>
+          <Route path="/FormLogin" element={<FormLogin/>}></Route>
           <Route path="/Dashboard" element={<Dashboard/>}></Route>
+          <Route path="/menu" element={<Menu />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/new_todo" element={<AddTodo />}></Route>
-          <Route path="/edit/:id" element={<EditTodo />}></Route>
+          <Route path="/AddTodo" element={<AddTodo />}></Route>
+          <Route path="/EditTodo" element={<EditTodo />}></Route>
         </Routes>
         <Copyright />
       </BrowserRouter>

@@ -12,9 +12,9 @@ function Home() {
         <h2>Let`s try to create account and save your data ini here </h2>
       </div>
       </div>
-      <div className=" flex justify-between mx-60">
+      <div className=" flex justify-center">
         <button
-          className=" border-2 p-2" 
+          className=" border-2 m-10 p-2" 
           onClick={() => {
           navigate("/Login");
           }}
@@ -22,7 +22,7 @@ function Home() {
           Login
           </button>
         <button 
-          className=" border-2 p-2"
+          className=" border-2 m-10 p-2"
           onClick={() => {
           navigate("/Register");
           }}

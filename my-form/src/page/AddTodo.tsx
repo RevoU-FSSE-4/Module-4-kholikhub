@@ -36,11 +36,12 @@ const AddTodo = () => {
   };
 
   return (
-    <>
-      <h1>Add Todo</h1>
+    <div className=" flex justify-center ">
+      <h1 className="m-2 ">Add Todo</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          className="mx-3 px-2 border-2"
           placeholder="todo"
           onChange={(e: any) => {
             setTodo(e.target.value);
@@ -48,15 +49,18 @@ const AddTodo = () => {
         />
         <input
           type="text"
+          className="mx-3 px-2 border-2"
           placeholder="user id"
           onChange={(e: any) => {
             setUserId(e.target.value);
           }}
         />
 
-        <button>Submit</button>
+        <button className=" border-2 p-2">
+          Submit
+        </button>
       </form>
-    </>
+    </div>
   );
 };
 
