@@ -18,6 +18,9 @@ const initialValues = {
   password: "",
   email: "",
 };
+interface ResponseLogin {
+  token: string;
+}
 
 interface FormData {
   password: string;
@@ -30,13 +33,6 @@ export default function FormLogin() {
 
 
     const navigate = useNavigate()
-  
-    // const handleSubmit = (values: FormData | any) => {
-    //   alert(JSON.stringify(values, null, 10));
-    //   setName(values.name);
-    //   setEmail(values.email);
-    //   setPassword(values.password);
-    // };
 
     async function onSubmit(e:any) {
         e.preventDefault()
@@ -66,13 +62,13 @@ export default function FormLogin() {
               throw new Error('invalid email or password');
             }
         
-            const data = await response.json();
+            const data: ResponseLogin = await response.json();
             console.log(data);
         
             // next move
             setTimeout(() => {
                 alert("Login Success");
-                localStorage.setItem('token', JSON.stringify(data));
+                localStorage.setItem('token', data.token);
                 navigate("/Dashboard");
             }, 1000);
         

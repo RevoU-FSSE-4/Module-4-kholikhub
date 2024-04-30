@@ -36,7 +36,6 @@ export default function Register() {
     const [email, setEmail] = useState<string>("");
 
     const navigate = useNavigate()
-  
     // const handleSubmit = (values: FormData | any) => {
     //   alert(JSON.stringify(values, null, 10));
     //   setName(values.name);
@@ -78,7 +77,7 @@ export default function Register() {
             // next move
             setTimeout(() => {
                 alert("Register Success");
-                navigate("/Formlogin");
+                navigate("/login");
             }, 1000);
         
         } catch (error) {

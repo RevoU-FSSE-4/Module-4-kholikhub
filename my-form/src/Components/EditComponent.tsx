@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import FetchData from "../Utils/Fetch";
 import { useNavigate, useParams } from "react-router-dom";
+import AddComponent from "./AddComponent";
 
-interface AddTodo {
-  todo: string;
-  completed: boolean;
-  userId: number;
-}
+const EditComponent = () => {
 
-const EditTodo = () => {
   const idParams = useParams();
-
   const navigate = useNavigate();
 
-  const [todo, setTodo] = useState("");
-  const [userId, setUserId] = useState(5);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response: AddTodo = await FetchData(
-        `https://dummyjson.com/todos/${idParams.id}`
+      const response: AddComponent = await FetchData(
+        `https://library-crud-sample.vercel.app/api/category/update${idParams.id}`
       );
-      setTodo(response.todo);
-      setUserId(response.userId);
+      setName(response.name);
+      setDescription(response.description);
     };
     fetchData();
   }, []);
@@ -30,47 +25,47 @@ const EditTodo = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log("trigger submit");
-    const newTodo: AddTodo = {
-      todo: todo,
-      completed: true,
-      userId: userId,
+    const updateComponent: AddComponent = {
+      name: name,
+      description: description,
+      active: true,
     };
 
     const options = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newTodo),
+      body: JSON.stringify(updateComponent),
     };
 
     const response = await FetchData(
-      `https://dummyjson.com/todos/${idParams.id}`,
+      `https://library-crud-sample.vercel.app/api/category/update${idParams.id}`,
       options
     );
     if (response) {
-      alert("success edit todo!");
+      alert("success edit Category!");
       navigate("/Dashboard");
     }
   };
 
   return (
     <>
-      <h1>Add Todo</h1>
+      <h1>Edit Category</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="todo"
+          placeholder="name"
           onChange={(e: any) => {
-            setTodo(e.target.value);
+            setName(e.target.value);
           }}
-          value={todo}
+          value={name}
         />
         <input
           type="text"
           placeholder="user id"
           onChange={(e: any) => {
-            setUserId(e.target.value);
+            setDescription(e.target.value);
           }}
-          value={userId}
+          value={description}
         />
 
         <button>Save</button>
@@ -79,4 +74,4 @@ const EditTodo = () => {
   );
 };
 
-export default EditTodo;
+export default EditComponent;

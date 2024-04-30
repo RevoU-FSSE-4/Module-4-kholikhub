@@ -1,67 +1,29 @@
-import { useContext, useEffect, useState } from "react";
-import FetchData from "../Utils/Fetch";
 import { useNavigate } from "react-router-dom";
-import { ProfileContext } from "../Context/ProfileContext";
+import HeaderComponent from "../Components/HeaderComponent";
+import CategoryComponent from "../Components/CategoryComponent";
 
-interface Todo {
-  id: number;
-  todo: string;
-  completed: boolean;
-  userId: number;
-}
+  const DashboardComponent= () => {
+  
+    const navigate = useNavigate();
 
-interface Page {
-  todos: Todo[];
-}
-
-const Dashboard = () => {
-  const profile = useContext(ProfileContext);
-  const [data, setData] = useState<Todo[]>();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response: Page = await FetchData("https://library-crud-sample.vercel.app/api/category/create");
-      setData(response.todos);
-      // alert(JSON.stringify(data, null, 10));
-    };
-
-    fetchData();
-  }, []);
-
-  const gotoEdit = (id: number) => {
-    navigate("/edit/" + id);
+    return (
+        <div>
+          <HeaderComponent />
+          <div className="">
+            <h1 className="flex justify-center text-5xl font-semibold ">My Dashborad</h1>
+            <div>
+            <CategoryComponent />
+            </div>
+          </div>
+            <br />
+            <br />
+            <a
+            onClick={() => navigate('/AddComponent')}
+            className="flex justify-center text-4xl font-bold text-green-500"
+            >
+            Create New
+            </a>
+        </div>
+    );
   };
-
-  return (
-    <>
-      <h1>Profile: {profile.name}</h1>
-      <h1>Menu Page </h1>
-      <button
-        onClick={() => {
-          navigate("/AddTodo");
-        }}
-      >
-        Add Todo
-      </button>
-      <ul>
-        {data &&
-          data.map((item) => (
-            <li key={item.id}>
-              {item.todo} - {item.completed ? "Completed" : "Not Completed"}{" "}
-              <button
-                onClick={() => {
-                  gotoEdit(item.id);
-                }}
-              >
-                Edit
-              </button>
-            </li>
-          ))}
-      </ul>
-    </>
-  );
-};
-
-export default Dashboard;
+export default DashboardComponent;

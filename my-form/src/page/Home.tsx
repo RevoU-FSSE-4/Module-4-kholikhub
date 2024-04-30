@@ -1,4 +1,3 @@
-import "./Home.css";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -16,7 +15,7 @@ function Home() {
         <button
           className=" border-2 m-10 p-2" 
           onClick={() => {
-          navigate("/Login");
+          navigate("/FormLogin");
           }}
           >
           Login
