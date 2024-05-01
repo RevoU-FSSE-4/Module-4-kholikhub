@@ -36,32 +36,32 @@ const HeaderComponent = () => {
         }   
     }
 
-    useEffect(() =>{
-        async function getProfile() {
-            const option = {
-                method:"GET",
-                header: {
-                    "Content-Type": "application/json",
-                    Authorozation: "Bearer" + localStorage.getItem("token"),
-                },
-            };
+    // useEffect(() =>{
+    //     async function getProfile() {
+    //         const option = {
+    //             method:"GET",
+    //             header: {
+    //                 "Content-Type": "application/json",
+    //                 Authorozation: "Bearer" + localStorage.getItem("token"),
+    //             },
+    //         };
 
-            try {
-            const response = await fetch(
-                "https://library-crud-sample.vercel.app/api/user/profile", option);
-                if(!response.ok){
-                    throw new Error("Profile Eror");
-                }
-                const jsonData = await response.json();
-                console.log(jsonData);
-                setResponse(JSON.stringify(jsonData))
-            } catch (error){
-                console.error("Error:", error);
+    //         try {
+    //         const response = await fetch(
+    //             "https://library-crud-sample.vercel.app/api/user/profile", option);
+    //             if(!response.ok){
+    //                 throw new Error("Profile Eror");
+    //             }
+    //             const jsonData = await response.json();
+    //             console.log(jsonData);
+    //             setResponse(JSON.stringify(jsonData))
+    //         } catch (error){
+    //             console.error("Error:", error);
             
-        }
-    }
-    getProfile()
-    },[]);
+    //     }
+    // }
+    // getProfile()
+    // },[]);
 
     return (
         <header>

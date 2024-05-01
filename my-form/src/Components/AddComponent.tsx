@@ -1,17 +1,12 @@
 import { useState } from "react";
 import FetchData from "../Utils/Fetch";
 import {useNavigate} from "react-router-dom";
-
-interface AddComponent {
-  name: string;
-  description: string;
-  active: boolean;
-}
+import ForAddComponent from "../types/ForAddComponent";
 
 const AddComponent = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [active, setActive] = useState("")
+  const [is_active, setIsActive] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,22 +14,28 @@ const AddComponent = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log("trigger submit");
-    const newAdd: AddComponent = {
-      name: name,
-      description: description,
-      active: true,
+    const AddCategory: ForAddComponent = {
+      category_name: name,
+      category_description: description,
+      is_active: is_active,
     };
 
     const options = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newAdd),
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+       },
+      body: JSON.stringify(AddCategory),
     };
 
     const response = await FetchData(
       "https://library-crud-sample.vercel.app/api/category/create",
       options
     );
+    setName(response.category_name);
+    setDescription(response.category_description);
+    setIsActive(response.is_active);
     if (response) {
       alert("success add Category!");
       navigate("/Dashboard");

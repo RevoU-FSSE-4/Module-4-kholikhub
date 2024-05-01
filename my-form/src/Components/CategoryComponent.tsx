@@ -1,89 +1,82 @@
-import { useEffect, useState , useContext} from "react";
+import { useCallback, useEffect, useState , useContext} from "react";
 import Category from "../types/Category";
 import {useNavigate} from "react-router-dom";
 import { ProfileContext } from "../Context/ProfileContext";
 import EditComponent from "./EditComponent";
+import FetchData from "../Utils/Fetch";
 
-interface data {
-    id: number;
-    name: string;
-    description: string;
-    active: boolean;
-  }
 export default function CategoryComponent() {
-    const [categoryResponses, setCategoryResponse] = useState<Category[]>([]);
+
     const profile = useContext(ProfileContext);
-    const [data, setData] = useState<data[]>();
+    const [data, setData] = useState<Category[]>();
+    const [count, setCount] = useState(0);
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        async function getProfile() {}
-            getProfile();
-            getCategory();
-        },[]);
-
-    const gotoEdit = (id: number) => {
-        navigate("/EditComponent/" + id);
+    const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       };
-
-    async function getCategory() {
-        const token = localStorage.getItem("token");
-        const option = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer" + token,
-            },
-        };
-
-        try {
-            const response = await fetch(
-                "https://library-crud-sample.vercel.app/api/category",
-                option
-            );
-            const result = await response.json();
-            const data = (result as Category[]) || [];
-            setCategoryResponse(data);
-        } catch (error) {
-            console.error("error", error);
-        }
-    }
+    
+      const fetchData = useCallback(async () => {
+        const response: Category[] = await FetchData(
+          "https://library-crud-sample.vercel.app/api/category",
+          options
+        );
+        setData(response);
+      }, []);
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
+    
+      const gotoEdit = (id: string) => {
+        navigate("./EditComponent/" + id);
+        console.log("cek goto edit" + id)
+      };
+      console.log("cek goto edit", gotoEdit)
 
     return (
         <>
             <div className=" flex justify-center text-xl font-semibold m-4">
                 <h1>Category List</h1>
-                <button className="ml-4">Edit</button>
             </div>
             <div className="flex justify-center text-xl font-semibold">
                 <div className="border-2">
-                    <tr>
-                        <td className="px-5">ID</td>
-                        <td className="px-5">NAME</td>
-                        <td className="px-5">DESCRIPTION</td>
-                        <td className="px-5">
-                            <button className="border-2">EDIT</button>
-                        </td>
-                        <td className="px-5">
-                            <button className="border-2">DELETE</button>
-                        </td>
-                    </tr>
-                    <tr>
+                    <ul>
                         {data &&
                         data.map((item) => (
-                        <td key={item.id}>
-                            {item.name} - {item.active ? "Completed" : "Not Completed"}{" "}
+                            <li key={item.id}>
+                            <b>Name:</b> {item.category_name} <br />
+                            <b>Description:</b> {item.category_description} <br />
+                            <b>Status:</b> {item.is_active ? "Active" : "Not Active"}
+                            <a
+                                onClick={() => navigate('/EditComponent')}
+                                className="flex justify-center text-4xl font-bold text-green-500"
+                                >
+                               Edit
+                            </a>
                             <button
-                            onClick={() => {
-                                gotoEdit(item.id);
-                            }}
+                                onClick={() => {
+                                gotoEdit(item.id)
+                                console.log(item.id);
+                                }}
                             >
-                            Edit
+                                Edit
                             </button>
-                        </td>
+                            <button
+                                onClick={() => {
+                                setCount(count + 1);
+                                }}
+                            >
+                                Delete
+                            </button>
+                            </li>
                         ))}
-                    </tr>
+                    </ul>
                 </div>                
             </div>
         </>

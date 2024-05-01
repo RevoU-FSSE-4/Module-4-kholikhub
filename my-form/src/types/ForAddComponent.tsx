@@ -1,5 +1,5 @@
 export default interface AddComponent {
-    name: string;
-    description: string;
-    active: boolean;
+  category_name: string;
+  category_description: string;
+  is_active: boolean;
   }

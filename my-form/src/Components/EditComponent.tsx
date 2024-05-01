@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Category from "../types/Category";
 import FetchData from "../Utils/Fetch";
 import { useNavigate, useParams } from "react-router-dom";
 import AddComponent from "./AddComponent";
@@ -6,18 +7,36 @@ import AddComponent from "./AddComponent";
 const EditComponent = () => {
 
   const idParams = useParams();
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [is_active, setIsActive] = useState(false);
+  const [id, setId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response: AddComponent = await FetchData(
-        `https://library-crud-sample.vercel.app/api/category/update${idParams.id}`
-      );
-      setName(response.name);
-      setDescription(response.description);
+      const optionsGet = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      };
+
+      try {
+        const response: Category = await FetchData(
+          `https://library-crud-sample.vercel.app/api/category/${idParams.id}`,
+          optionsGet
+        );
+        setName(response.category_name);
+        setDescription(response.category_description);
+        setIsActive(response.is_active);
+        setId(response.id);
+      } catch (error: any) {
+        alert(error.message);
+      }
     };
     fetchData();
   }, []);
@@ -25,20 +44,24 @@ const EditComponent = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     console.log("trigger submit");
-    const updateComponent: AddComponent = {
-      name: name,
-      description: description,
-      active: true,
+    const newCategory: Category = {
+      category_name: name,
+      category_description: description,
+      is_active: is_active,
+      id: id,
     };
 
     const options = {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateComponent),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newCategory),
     };
 
     const response = await FetchData(
-      `https://library-crud-sample.vercel.app/api/category/update${idParams.id}`,
+      `https://library-crud-sample.vercel.app/api/category/update`,
       options
     );
     if (response) {
@@ -61,7 +84,7 @@ const EditComponent = () => {
         />
         <input
           type="text"
-          placeholder="user id"
+          placeholder="description"
           onChange={(e: any) => {
             setDescription(e.target.value);
           }}

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import HeaderComponent from "../Components/HeaderComponent";
 import CategoryComponent from "../Components/CategoryComponent";
+import EditComponent from "../Components/EditComponent";
 
   const DashboardComponent= () => {
   
@@ -15,6 +16,9 @@ import CategoryComponent from "../Components/CategoryComponent";
             <CategoryComponent />
             </div>
           </div>
+          {/* <div>
+            <EditComponent/>
+          </div> */}
             <br />
             <br />
             <a
