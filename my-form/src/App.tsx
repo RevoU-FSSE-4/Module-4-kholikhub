@@ -17,6 +17,7 @@ import EditComponent from "./Components/EditComponent";
 
 
 
+
 function App() {
   const [profile, setProfile] = useState("anonymous");
 
@@ -46,8 +47,7 @@ function App() {
             <Route path="/Dashboard" element={<Dashboard/>}></Route>
             <Route path="/CategoryComponent" element={<CategoryComponent />}></Route>
             <Route path="/AddComponent" element={<AddComponent />}></Route>
-            <Route path="/EditComponent:id" element={<EditComponent />}></Route>
-            <Route path="/EditComponent" element={<EditComponent />}></Route>
+            <Route path="/EditComponent/:id" element={<EditComponent />}></Route>
           </Route>
         </Routes>
         <Copyright />

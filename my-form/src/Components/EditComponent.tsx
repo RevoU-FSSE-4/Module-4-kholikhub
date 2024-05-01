@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Category from "../types/Category";
 import FetchData from "../Utils/Fetch";
 import { useNavigate, useParams } from "react-router-dom";
-import AddComponent from "./AddComponent";
+
 
 const EditComponent = () => {
 
@@ -71,11 +71,12 @@ const EditComponent = () => {
   };
 
   return (
-    <>
-      <h1>Edit Category</h1>
+    <div className=" flex justify-center ">
+      <h1 className="m-2 ">Edit Category</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
+          className="mx-3 px-2 border-2"
           placeholder="name"
           onChange={(e: any) => {
             setName(e.target.value);
@@ -84,6 +85,7 @@ const EditComponent = () => {
         />
         <input
           type="text"
+          className="mx-3 px-2 border-2"
           placeholder="description"
           onChange={(e: any) => {
             setDescription(e.target.value);
@@ -91,9 +93,13 @@ const EditComponent = () => {
           value={description}
         />
 
-        <button>Save</button>
+        <button
+          className=" border-2 p-2"
+          >
+            Save
+        </button>
       </form>
-    </>
+    </div>
   );
 };
 

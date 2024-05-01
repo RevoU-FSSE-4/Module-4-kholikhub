@@ -16,9 +16,6 @@ import EditComponent from "../Components/EditComponent";
             <CategoryComponent />
             </div>
           </div>
-          {/* <div>
-            <EditComponent/>
-          </div> */}
             <br />
             <br />
             <a
